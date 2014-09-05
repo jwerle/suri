@@ -25,9 +25,9 @@ usage () {
 
 NSString *
 normalizeScheme (NSString *scheme) {
-  // search for ':' and append it if not found
-  if (NSNotFound == [scheme rangeOfString:@":"].location) {
-    scheme = [scheme stringByAppendingString:@":"];
+  // search for ':' and remove it
+  if (NSNotFound != [scheme rangeOfString:@":"].location) {
+    scheme = [scheme stringByTrimmingCharactersInSet: [NSCharacterSet symbolCharacterSet]];
   }
 
   return scheme;
@@ -142,6 +142,7 @@ main (int argc, char **argv) {
           (__bridge CFStringRef) scheme,
           (__bridge CFStringRef) [bundle bundleIdentifier]);
 
+      printf("%d\n", status);
       switch (status) {
         case noErr:
           // we were successful !
