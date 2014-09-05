@@ -24,10 +24,17 @@ usage () {
  */
 
 NSString *
-normalizeScheme (NSString *scheme) {
+normalizeScheme (NSString *scheme, int postfix) {
   // sanitize string
   if (NSNotFound != [scheme rangeOfString:@":"].location) {
     scheme = [scheme stringByTrimmingCharactersInSet: [NSCharacterSet symbolCharacterSet]];
+  }
+
+  if (1 == postfix) {
+    // search for ':' and append it if not found
+    if (NSNotFound == [scheme rangeOfString:@":"].location) {
+      scheme = [scheme stringByAppendingString:@":"];
+    }
   }
 
   return scheme;
@@ -87,13 +94,13 @@ main (int argc, char **argv) {
     // `char *' to `NSString' for application scheme
     scheme = [NSString stringWithUTF8String: argv[1]];
 
-    // normalize scheme
-    scheme = normalizeScheme(scheme);
-
     // get by uri scheme
     if (2 == argc) {
       // C url reference for url
       CFURLRef curl = nil;
+
+      // normalize scheme
+      scheme = normalizeScheme(scheme, 1);
 
       // get application scheme url
       status = LSGetApplicationForURL(
@@ -113,8 +120,10 @@ main (int argc, char **argv) {
 
         // unknown error
         default:
-          FERROR("error: An unknown error occured when retrieving application"
-              "URL for `%s' in `LSGetApplicationForURL()'\n", argv[1]);
+          FERROR("error(%d): An unknown error occured when retrieving application"
+              "URL for `%s' in `LSGetApplicationForURL()'\n",
+              status,
+              argv[1]);
           return 1;
       }
 
@@ -130,6 +139,9 @@ main (int argc, char **argv) {
     if (3 == argc) {
       // `char *' to `NSString' for application name
       app = [NSString stringWithUTF8String: argv[2]];
+
+      // normalize scheme
+      scheme = normalizeScheme(scheme, 0);
 
       // get application path
       path = [workspace fullPathForApplication: app];
