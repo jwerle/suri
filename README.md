@@ -37,8 +37,9 @@ You can set an applications URI by prodiving a `scheme` and a
 
 
 ```sh
-$ suri spot Spotify
-Setting scheme `spot:' for application bundle `com.spotify.client'
+$ suri slack Slack
+Setting scheme `slack' for application bundle `com.tinyspeck.slackmacgap'
+$ open slack:
 ```
 
 ## license

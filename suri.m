@@ -148,7 +148,11 @@ main (int argc, char **argv) {
           break;
 
         default:
-          printf("%d\n", status);
+          FERROR("error(%d): Unable to set URI `%s' for `%s'. "
+                 "An Unknown error occured.\n",
+                 status,
+                 [scheme UTF8String],
+                 argv[2]);
           return 1;
       }
 
