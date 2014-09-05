@@ -4,5 +4,5 @@
   "repo": "jwerle/suri",
   "description": "Set and get application URI schemes for OS X",
   "keywords": ["application", "uri", "scheme", "osx"],
-  "install": "make install"
+  "install": "make suri install"
 }
