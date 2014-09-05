@@ -1,6 +1,6 @@
 {
   "name": "suri",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "repo": "jwerle/suri",
   "description": "Set and get application URI schemes for OS X",
   "keywords": ["application", "uri", "scheme", "osx"],
